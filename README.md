@@ -10,3 +10,6 @@ language Ruby. I have reviewed and implemented some basic modules and classes fo
 working with strings, codon tables, colour schemes, databases, modelled protein data (PDB
 file) as a graph and protein unfolding path. All shown BioRuby functions are mostly used by
 bioinformaticians.
+
+
+Keywords: BioRuby, sequences, alignment, codon table, databases, protein, graph, protein unfolding
