@@ -1,0 +1,46 @@
+<% content_for :logo do %>
+  <h1 class="title"> Grafo modeliavimas </h1> <br/>
+
+  Čia pateikiamas grafo sudarymas iš turimų baltymo duomenų. Grafų paišymui naudojamas GraphViz paketas.<br/>
+  Duomenų šaltinis : PDB failas iš  <a href="http://www.pdb.org/pdb/home/home.do">"Protein Data Bank"</a><br/>
+  Sudaromas galimas baltymo išsilankstymo kelias, paremtas silpniausiais ryšiais.<br/>
+  Galima pasirinkti iš 4 baltymų PDB failų:
+  <ul>
+    <li>2IGD - ilgis 61, SSE - 5</li>
+    <li>2OED - ilgis 56, SSE - 5</li>
+    <li>3BBU - ilgis 104, SSE - 9 (! - skaičiuoja ilgai)</li>
+    <li>3E9V - ilgis 120, SSE - 9 (! - skaičiuoja ilgai)</li>
+  </ul>
+<% end %>
+
+<% form_tag do |f| %>
+  Pasirinkite baltymą : <br />
+  <br />
+<%= select_tag 'input', options_for_select(['2IGD.pdb', '2OED.pdb', '3BBU.pdb', '3E9V.pdb'], :selected=> params[:input]) %> 
+  <%= submit_tag 'OK' %>  
+  <br/>
+<br />
+<%end%>
+
+<% if @results %>
+  Baltymo antrinių struktūrų išsidėstymas, pagal PDB numeraciją:<br/>
+  <% @vertices.size.times do |x| %>
+    <%= @vertices[x] %>
+  <%end%>
+  <br/>
+  <br/>
+  <%  @sheet_data_init.size.times do |sheet|%>
+    Beta klostės[B<%=  sheet+1 %>] pradžios ir pabaigos pozicija : <%= @sheet_data_init[sheet] %> - <%= @sheet_data_end[sheet] %><br/>
+  <%end%>
+  <%  @helix_data_init.size.times do |sheet|%>
+    Alfa spiralės[A<%=  sheet+1 %>] pradžios ir pabaigos pozicija : <%= @helix_data_init[sheet] %> - <%= @helix_data_end[sheet] %><br/>
+  <%end%>
+  <br/>
+  Svorinis antrinių struktūrų grafas gautas iš baltymo duomenų, briaunos nurodo sąveikos stiprumą:<br/>
+  <a href="../images/graphs/pdb.png"> <img src="../images/graphs/pdb.png" alt="Graph"  style="height: 200px"/></a><br/>
+  <br/>
+  Galimas baltymo išsilankstymo kelias:<br/>
+  <a href="../images/graphs/unfold.png"> <img src="../images/graphs/unfold.png" alt="Graph"  style="height: 200px"/></a>
+
+<% end %>
+

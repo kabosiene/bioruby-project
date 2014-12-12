@@ -1,0 +1,66 @@
+<% content_for :logo do %>
+<h1 class="title"> SwissProt</h1> <br />
+  Prisijungia prie SwissProt, pagal nurodytą ID, įkelia duomenis.<br/>
+  <ul>
+    <li> alternatyvūs ID</li>
+    <li> baltymo pavadinimas</li>
+    <li> kur randamas</li>
+    <li> įkėlimo/redagavimo data</li>
+    <li> baltymo seka</li>
+  </ul>
+<% end %>
+<% form_tag do |f| %>
+ 
+  <table>
+    <tr>
+      <td>Įveskite ID* </td>
+      <td><%= text_field_tag 'entry', params[:entry], :size=>10 %></td>
+      <% if flash[:notice] -%>
+        <td> <div id="notice">
+            <%= flash[:notice] %>
+          </div>
+        </td>   
+      <% end -%>
+        <td>  <%= submit_tag 'OK' %></td>
+    </tr>
+    <tr>
+      <td></td>
+      <td>*pvz.: P03516</td>
+    </tr>
+  </table>
+  <hr style=" color: #F7CBDF "/>
+<% end %>
+<table cellpadding="3" cellspacing="5">
+  <% if @results %>
+    <tr>
+      <td><b>ID:</b></td>
+      <td><%=  @results[:entry_id] %></td>
+    </tr>
+    <tr>
+      <td><b>Galimi ID:</b></td>
+      <td><%= @results[:ac].join(" ") %></td>
+    </tr>
+    <tr>
+      <td><b>DE: </b> </td>
+      <td><%=  @results[:protein_name]%></td>
+    </tr>
+    <tr>
+      <td><b>OC: </b></td>
+      <td> <%=  @results[:oc].join("; ") %></td>
+    </tr>
+    <tr>
+      <td><b>DTS: </b> </td></tr><tr>
+      <% @results[:dt].each_pair do |key ,value|%>
+        <td></td><td> <%=value%> </td>
+      </tr>
+    <%end%>
+  </table>
+  <table>
+    <tr>
+      <td><b>Seka:</b></td>
+    </tr>
+    <tr>
+      <td><pre><%= breaking_wrap(@results[:seq] )%></pre></td>
+    </tr>
+  <% end %>
+</table>

@@ -1,0 +1,106 @@
+<% content_for :logo do %>
+  <h1 class="title"> Sekos apdorojimas </h1> <br />
+  Išveda įvairią informaciją apie amino/nukleo rūgštį:<br/>
+  <ul>
+    <li>molekulinis svoris</li>
+    <li>elementų kiekis</li>
+    <li>komplementari seka </li>
+    ...
+  </ul>
+<% end %>
+
+<% form_tag do |f| %>
+
+  <table>
+    <tr>
+      <td>Įveskite seką:</td>
+    </tr>
+    <tr>
+      <td><%= text_area_tag 'input', params[:input], :rows => 2, :cols => 60 %></td>
+    </tr>
+    <tr>
+      <td><%= submit_tag 'OK' %></td>
+    </tr>
+  </table>
+<% end %>
+
+<table cellpadding="5" cellspacing="5" style="text-align:center">
+  <% if @results %>
+
+    <tr>
+      <th><b>Sekos ilgis:</b></th>
+      <th><b>Molekulinis svoris:</b></th>
+      <th><b> Elementų kiekis:</b></th>
+      <%if @results[:is_na]%>
+        <th><b>GC kiekis procentais:</b></th>
+      <%end%>
+    </tr>
+    <tr>
+      <td><%= @results[:sequence_length] %></td>
+      <td><%= @results[:output_weight] %> Da</td>
+      <td > <% @results[:output_composition].each_pair do |key, value| %>
+          <%= key %> -> <%= value %><br/>
+        <% end %></td>
+      <%if @results[:is_na]%>
+        <td><%= @results[:output_gc_percet] %> %</td>
+      <%end%>
+    </tr>
+  </table>
+
+  <table cellpadding="5" cellspacing="5">
+    <%if @results[:is_na]%>
+      <tr>
+        <td><b>Seka išskaidyta po 3:</b> </td>
+      </tr>
+      <tr>
+        <td  style=" text-align: "> <pre><%= breaking_wrap @results[:sequence_window].join(" "), 80 %></pre></td>
+      </tr>
+      <tr>
+        <td><b> Originali ir komplementari seka:</b> </td>
+      </tr>
+      <%
+      masyvas, masyvas_k = [], []
+      @input_seq.split("").each_slice(60) { |n| masyvas << n }
+      @results[:output_complement].split("").each_slice(60) { |k| masyvas_k << k }
+      -%>
+
+      <% masyvas.size.times do |i| %>
+        <tr>
+          <td>
+            <pre>O: <%= masyvas[i] %></pre>
+            <pre>K: <%= masyvas_k[i] %> </pre>
+          </td>
+        </tr>
+
+      <%end%>
+      <tr>
+        <td><b>Kodonų randama:</b></td>
+      </tr>
+      <% @results[:codon_usage].each_pair do |key, value| %>
+        <tr>
+          <td > <pre><%= key %> -> <%=  value %> </pre></td>
+        </tr>
+      <%  end %>
+
+    <%else%>
+      <tr>
+        <td><b>Amino rūgšties santrumpa:</b></td>
+      </tr>
+      <tr>
+        <td ><%= @results[:seq_codes].join(" ") %></td>
+      </tr>
+      <tr>
+        <td><b>Amino rūgšties pavadinimai:</b></td>
+      </tr>
+      <tr>
+        <td > <%= @results[:seq_names].join(" ") %></td>
+      </tr>
+    <% end %>
+    <tr>
+      <td><b>Fasta išvedimo stilius:</b></td>
+    </tr>
+    <tr>
+      <td ><pre><%= breaking_wrap(@results[:output_stile]) %></pre></td>
+    </tr>
+  <%end%>
+</table>

@@ -1,0 +1,31 @@
+  <% content_for :logo do %>
+  <h1 class="title"> Sekų išlyginimas </h1> <br />
+  <ul>
+    <li>atliekamas ClustalW išlyginimas kelioms sekoms </li>
+    <li>randamos bendros sekos</li>
+    <li>vizualizavimas</li>
+  </ul>
+<% end %>
+<% form_tag do |f| %>
+
+  Įveskite sekas:<br />
+  
+  <%= text_area_tag 'input', params[:input], :rows => 5, :cols => 40 %><br />
+  
+  <%= submit_tag 'OK' %><br/>
+<% end %>
+<br/>
+<br/>
+<% if @results %>
+  <b>Bendra seka (prieš išlyginimą):</b> <pre><%= breaking_wrap@results[:s_consensus],80 %></pre><br/>
+  <b> Bendra seka IUPAC standartu (prieš išlyginimą):</b> <pre><%= breaking_wrap@results[:s_c_iupac],80 %></pre><br/>
+  
+  <b>Sekų išlyginimas ClustalW:</b> <br/>
+  <pre><%= @results[:sec_clustal].join('<br/>') %></pre><br/>
+  <b> Bendra seka IUPAC standartu (po išlyginimo):</b> <pre><%= breaking_wrap@results[:s_c_iupac2],80 %></pre><br/>
+  <b>Grafinis atvaizdavimas:</b><br/>
+  <IFRAME src="/images/test.html" WIDTH=100% HEIGHT=200px >
+
+  </IFRAME>
+
+<% end %>

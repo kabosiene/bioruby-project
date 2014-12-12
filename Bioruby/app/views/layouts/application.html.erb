@@ -1,0 +1,58 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html>
+  <head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <title>BioRuby paketas ir jo panaudojimas</title>
+    <%= stylesheet_link_tag "stylesheet_css" %>
+    <%= javascript_include_tag :all %>
+  </head>
+  <body>
+    <div id="wrapper">
+
+
+      <div id="menu">
+        <h1> BioRuby paketas ir jo panaudojimas</h1>
+      </div>
+      <div id="header">
+        <div id="logo">
+          <%= yield :logo %>
+
+        </div>
+      </div>
+      <div id="page">
+        <div id="sidebar1" class="sidebar">
+          <ul>
+            <li><h2>Meniu</h2>
+              <ul>
+                <li><a href="/">Pradžia</a></li>
+                <li><a href="/sequences/sequence">Sekos apdorojimas</a></li>
+                <li><a href="/sequences/sequences">Sekų išlyginimas</a></li>
+                <li><a href="/schemes/codon">Kodonų lentelė</a></li>
+                <li><a href="/schemes/scheme">Spalvų schema</a></li>
+                <li><a href="/database/swissp">Darbas su SwissProt</a></li>
+               <li><a href="/modeling_graph/modeling_graph">Grafo modeliavimas</a></li>
+              </ul>
+            </li>
+          </ul>
+          <ul>
+            <li><h2>Papildoma informacija</h2>
+              <ul><li><a href="http://www.bioruby.org/">BioRuby puslapis</a></li>
+                <li><a href="http://apidock.com/rails">Ruby on Rails APIdock</a></li>
+              </ul>
+            </li>
+          </ul>
+
+        </div>
+
+        <div id="content">
+          <%= yield %>
+        </div>
+        <div style="clear: both;">&nbsp;</div>
+      </div>
+      <div id="footer">
+        <p class="copyright">&copy;&nbsp;2010 Kristina Kabošienė, Bioinformatika</p>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,24 @@
+<% content_for :logo do %>
+  <h1 class="title">Kodonų lentelė* </h1> <br />
+  <ul>
+  <li>įvestoje sekoje bando rasti amino rūgštis</li>
+  <li>galimus start kodonus</li>
+  </ul>
+<% end %>
+
+<% form_tag do |f| %>
+
+  Įveskite seką: <br/>*Standard (Eukaryote)<br/>
+  <%= text_area_tag 'c_seq', params[:c_seq], :rows => 4, :cols =>60 %><br />
+
+  <%= submit_tag 'OK' %><br/>
+
+<% end %>
+
+<% if @results %>
+
+  <b>Amino rūgšties santrumpos:</b> <%= codon_wrap(@results[:c_table].to_s) %> <br/>
+  <b>Rasti start kodonai:</b> <%= @results[:start_codon?].join(", ") %> <br/>
+
+
+<% end %>

@@ -1,0 +1,28 @@
+<% content_for :logo do %>
+  <h1 class="title"> Spalvų schema</h1> 
+  <ul>
+    <li>paprastas spalvinis sekų atvaizdavimas, tinkamas atlikus daugybinį išlyginimą, ieškant silpnų ryšių</li>
+ Galimos schemos:
+  <li> Buried </li>
+  <li> Helix</li>
+  <li> Hydropathy</li>
+  <li> Nucleotide</li>
+  <li> Strand</li>
+  <li> Taylor</li>
+  <li> Turn</li>
+  <li> Zappo </li>
+  </ul>
+<% end %>
+
+<% form_tag do |f| %>
+  Įveskite seką ir pasirinkite schemos tipą: <br/>
+  <%= select_tag 'input', options_for_select(['Buried','Helix', 'Hydropathy', 'Nucleotide', 'Strand', 'Taylor','Turn', 'Zappo'], :selected=> params[:input]) %><br />
+  <%= text_area_tag 'seq', params[:seq], :rows => 4, :cols => 60 %><br />
+  <%= submit_tag 'OK' %><br/>
+<% end %>
+
+<% if @results %>
+  <div id="scheme_result"> <%= simple_format  @results %></div>
+<% end %>
+
+
